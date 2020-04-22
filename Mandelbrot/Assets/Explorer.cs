@@ -37,6 +37,23 @@ public class Explorer : MonoBehaviour {
         {
             scale *= 1.01f;
         }
+
+        if (Input.GetKey(KeyCode.A))
+        {
+            pos.x -= .01f*scale;
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            pos.x += .01f * scale;
+        }
+        if (Input.GetKey(KeyCode.W))
+        {
+            pos.y += .01f * scale;
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            pos.y -= .01f * scale;
+        }
     }
 
     // The difference between update and fixed update is that the fixed update execute fixed amount of update per seconds
