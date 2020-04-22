@@ -3,6 +3,9 @@
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
+		//We want to program zomming. Variable _Area hold the area we are going to render.
+		//(0,0 "Center of the are we are gonna render", 4, 4 "Size of area we are going to rendar.")
+		_Area("Area", vector) = (0, 0, 4, 4)
     }
     SubShader
     {
@@ -37,12 +40,13 @@
                 return o;
             }
 
+			float4 _Area;
             sampler2D _MainTex;
 
             fixed4 frag (v2f i) : SV_Target
             {
 				//Fundamental Mendelbrot loop.
-				float2 c = i.uv;
+				float2 c = _Area.xy + (i.uv - .5)*_Area.zw; //Vector is xyzw.
 				float2 z;
 				float iter;
 				for (iter = 0; iter < 100; iter++) {
