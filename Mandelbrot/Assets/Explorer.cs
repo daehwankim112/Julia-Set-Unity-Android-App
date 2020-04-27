@@ -8,23 +8,26 @@ public class Explorer : MonoBehaviour {
     public Vector2 pos;
     public float scale;
 
+
+    private Vector2 smoothPos;
+    private float smoothScale;
+
     private void UpdateShaer()
     {
+        smoothPos = Vector2.Lerp(smoothPos, pos, .05f);
+        smoothScale = Mathf.Lerp(smoothScale, scale, .05f);
+
         float aspect = (float)Screen.width / (float)Screen.height; //These are integer so it should be casted to float otherwise, it will be truncated.
 
-        float scaleX = scale;
-        float scaleY = scale;
+        float scaleX = smoothScale;
+        float scaleY = smoothScale;
 
         if (aspect > 1f)
-        {
             scaleY /= aspect;
-        }
         else
-        {
             scaleX *= aspect;
-        }
 
-        mat.SetVector("_Area", new Vector4(pos.x, pos.y, scaleX, scaleY));
+        mat.SetVector("_Area", new Vector4(smoothPos.x, smoothPos.y, scaleX, scaleY));
     }
 
     private void HandleInputs()
