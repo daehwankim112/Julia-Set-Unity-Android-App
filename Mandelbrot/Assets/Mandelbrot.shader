@@ -1,10 +1,10 @@
-﻿Shader "Explorer/Mandelbrot"
+Shader "Explorer/Mandelbrot"
 {
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
 		//We want to program zomming. Variable _Area hold the area we are going to render.
-		//(0,0 "Center of the are we are gonna render", 4, 4 "Size of area we are going to rendar.")
+		//(0,0 "Center of the mandelbrot", 4, 4 "Size of area we are going to rendar.")
 		_Area("Area", vector) = (0, 0, 4, 4)
     }
     SubShader
@@ -46,15 +46,19 @@
             fixed4 frag (v2f i) : SV_Target
             {
 				//Fundamental Mendelbrot loop.
-				float2 c = _Area.xy + (i.uv - .5)*_Area.zw; //Vector is xyzw.
-				float2 z;
+				float2 c = float2(-0.7269f, 0.1889f);
+				float2 z = _Area.xy + (i.uv - .5)*_Area.zw;
 				float iter;
-				for (iter = 0; iter < 100; iter++) {
+				float maxiter = 1000;
+
+				for (iter = 0; iter < maxiter; iter++) {
 					z = float2(z.x*z.x - z.y*z.y, 2 * z.x*z.y) + c;
 					if (length(z) > 2) break;
 				}
 
-                return iter/100;
+				if (iter == maxiter)
+					return 0;
+                return iter/ maxiter;
             }
             ENDCG
         }
