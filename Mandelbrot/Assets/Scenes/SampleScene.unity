@@ -206,7 +206,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mat: {fileID: 2100000, guid: fe233ef232aed2043999956a9d6e5c9b, type: 2}
   pos: {x: 0, y: 0}
-  scale: 40
+  scale: 10
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

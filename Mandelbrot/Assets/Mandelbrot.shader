@@ -6,6 +6,9 @@ Shader "Explorer/Mandelbrot"
 		//We want to program zomming. Variable _Area hold the area we are going to render.
 		//(0,0 "Center of the mandelbrot", 4, 4 "Size of area we are going to rendar.")
 		_Area("Area", vector) = (0, 0, 4, 4)
+		_R("Red", range(0,1)) = 0.5
+		_G("Green", range(0, 1)) = 0.5
+		_B("Blue", range(0, 1)) = 0.5
     }
     SubShader
     {
@@ -42,6 +45,8 @@ Shader "Explorer/Mandelbrot"
 
 			float4 _Area;
             sampler2D _MainTex;
+			float _R, _G, _B;
+			
 
             fixed4 frag (v2f i) : SV_Target
             {
@@ -50,16 +55,25 @@ Shader "Explorer/Mandelbrot"
 				float2 z = _Area.xy + (i.uv - .5)*_Area.zw;
 				float iter;
 				float maxiter = 1000;
+				float r = 20;
+				float r2 = r * r;
 
 				for (iter = 0; iter < maxiter; iter++) {
 					z = float2(z.x*z.x - z.y*z.y, 2 * z.x*z.y) + c;
-					if (length(z) > 2) break;
+					if (length(z) > r) break;
 				}
 
 				if (iter == maxiter)
 					return 0;
+
+				float dist = length(z); //Distance from origin
+				float fracIter = (dist - r) / (r2 - r);
+				fracIter = log(dist) / log(r) - 1;
+
+				iter -= fracIter;
+
                 float m = sqrt(iter/ maxiter);
-				float4 col = sin(float4(.1, .3, .7, 1) * m * 20)*.5 +.5;
+				float4 col = sin(float4(_R, _G, _B, 1) * m * 100)*.5 +.5;
 				return col;
             }
             ENDCG
