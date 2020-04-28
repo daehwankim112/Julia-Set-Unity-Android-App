@@ -68,12 +68,12 @@ Shader "Explorer/Mandelbrot"
 
 				float dist = length(z); //Distance from origin
 				float fracIter = (dist - r) / (r2 - r);
-				fracIter = log(dist) / log(r) - 1;
+				fracIter = log2( log(dist) / log(r) ); //double exponential interpolation
 
 				iter -= fracIter;
 
                 float m = sqrt(iter/ maxiter);
-				float4 col = sin(float4(_R, _G, _B, 1) * m * 100)*.5 +.5;
+				float4 col = (cos(float4(_R, _G, _B, 1)*m * 20 + _Time.y)*0.5 +.5 );
 				return col;
             }
             ENDCG
