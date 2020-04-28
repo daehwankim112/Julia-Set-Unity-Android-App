@@ -58,7 +58,9 @@ Shader "Explorer/Mandelbrot"
 
 				if (iter == maxiter)
 					return 0;
-                return iter/ maxiter;
+                float m = sqrt(iter/ maxiter);
+				float4 col = sin(float4(.1, .3, .7, 1) * m * 20)*.5 +.5;
+				return col;
             }
             ENDCG
         }
