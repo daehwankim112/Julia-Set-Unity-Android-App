@@ -9,6 +9,7 @@ Shader "Explorer/Mandelbrot"
 		_R("Red", range(0,1)) = 0.5
 		_G("Green", range(0, 1)) = 0.5
 		_B("Blue", range(0, 1)) = 0.5
+		[Toggle] _TimePass("Time", Float) = 0
     }
     SubShader
     {
@@ -45,8 +46,8 @@ Shader "Explorer/Mandelbrot"
 
 			float4 _Area;
             sampler2D _MainTex;
-			float _R, _G, _B;
-			
+			float _R, _G, _B, _TimePass;
+			uniform float color_diff = 0;
 
             fixed4 frag (v2f i) : SV_Target
             {
@@ -57,6 +58,7 @@ Shader "Explorer/Mandelbrot"
 				float maxiter = 1000;
 				float r = 20;
 				float r2 = r * r;
+				float4 col;
 
 				for (iter = 0; iter < maxiter; iter++) {
 					z = float2(z.x*z.x - z.y*z.y, 2 * z.x*z.y) + c;
@@ -73,7 +75,8 @@ Shader "Explorer/Mandelbrot"
 				iter -= fracIter;
 
                 float m = sqrt(iter/ maxiter);
-				float4 col = (cos(float4(_R, _G, _B, 1)*m * 20 + _Time.y)*0.5 +.5 );
+				col = (cos(float4(_R, _G, _B, 1)*m * 20 + color_diff)*0.5 + .5);
+
 				return col;
             }
             ENDCG

@@ -7,8 +7,9 @@ public class Explorer : MonoBehaviour {
     public Material mat;
     public Vector2 pos;
     public float scale;
+    public float timespeed = 0.01f;
 
-
+    private float diff = 0;
     private Vector2 smoothPos;
     private float smoothScale;
 
@@ -65,5 +66,9 @@ public class Explorer : MonoBehaviour {
     {
         HandleInputs();
         UpdateShaer();
+        if ( mat.GetFloat("_TimePass") == 1 ) {
+            diff += timespeed;
+        }
+        Shader.SetGlobalFloat("color_diff", diff);
     }
 }
