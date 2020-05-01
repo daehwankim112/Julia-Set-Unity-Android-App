@@ -16,7 +16,7 @@ public class Explorer : MonoBehaviour {
 
     private void UpdateShaer()
     {
-        //smoothPos = Vector2.Lerp(smoothPos, pos, .05f);
+        smoothPos = Vector2.Lerp(smoothPos, pos, .05f);
         smoothScale = Mathf.Lerp(smoothScale, scale, .05f);
 
         float aspect = (float)Screen.width / (float)Screen.height; //These are integer so it should be casted to float otherwise, it will be truncated.
@@ -29,25 +29,8 @@ public class Explorer : MonoBehaviour {
         else
             scaleX *= aspect;
 
-        mat.SetVector("_Area", new Vector4(pos.x, pos.y, scaleX, scaleY));
+        mat.SetVector("_Area", new Vector4(smoothPos.x, smoothPos.y, scaleX, scaleY));
     }
-    /*
-    private Vector3 PlanePositionDelta(Touch touch)
-    {
-        //not moved
-        /*
-        if (touch.phase != TouchPhase.Moved)
-            return Vector3.zero;
-
-        var Before = touch.position - touch.deltaPosition;
-        var Now = touch.position;
-        */
-        /*
-        Delta1 = Vector3.zero;
-
-        
-
-    }*/
 
     private void HandleInputs()
     {
@@ -98,31 +81,22 @@ public class Explorer : MonoBehaviour {
             diff += timespeed;
         }
         Shader.SetGlobalFloat("color_diff", diff);
-
         
-        /*
-            if (Input.GetTouch(0).phase == TouchPhase.Began)
-                
-        */
         if (Input.touchCount >= 1)
         {
             
             if (Input.GetTouch(0).phase == TouchPhase.Began)
             {
                 firstTouch = Input.GetTouch(0).position;
-                //print("Phase " + Input.GetTouch(0).phase + "\nPosition " + firstTouch);
             }
                 
             if (Input.GetTouch(0).phase == TouchPhase.Moved)
             {
-                //Vector3 touchPosition = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
-
-                //print(((Input.GetTouch(0).position.x - firstTouch.x) / Screen.width, (Input.GetTouch(0).position.y - firstTouch.y) / Screen.height));
+                //Vector of movement from first touch to new touch position is calculated
                 Vector2 movement = new Vector2(10*(Input.GetTouch(0).position.x - firstTouch.x) / ((float)Screen.width), 6*(Input.GetTouch(0).position.y - firstTouch.y) / ((float)Screen.height));
                 pos -= movement;
-                print("Position: " + pos + "\nMovement: " + movement + "     firstTouch: " + firstTouch);
-                firstTouch = Input.GetTouch(0).position;
-                //pos += touchPosition * scale;
+                firstTouch = Input.GetTouch(0).position; //First touch is being updated (following) new touch position
+
             }
         }
     }
