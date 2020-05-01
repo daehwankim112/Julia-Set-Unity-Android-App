@@ -9,6 +9,7 @@ Shader "Explorer/Mandelbrot"
 		_R("Red", range(0,1)) = 0.5
 		_G("Green", range(0, 1)) = 0.5
 		_B("Blue", range(0, 1)) = 0.5
+		[Toggle] _TimePass("Time", Float) = 0
     }
     SubShader
     {
@@ -45,7 +46,7 @@ Shader "Explorer/Mandelbrot"
 
 			float4 _Area;
             sampler2D _MainTex;
-			float _R, _G, _B;
+			float _R, _G, _B, _TimePass;
 			uniform float color_diff = 0;
 
             fixed4 frag (v2f i) : SV_Target

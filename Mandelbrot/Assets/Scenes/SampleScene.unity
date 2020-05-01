@@ -156,8 +156,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -0.005859375, y: 0.014770508}
+  m_SizeDelta: {x: 0.01171875, y: -0.029571533}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &536812481
 MonoBehaviour:
@@ -207,6 +207,7 @@ MonoBehaviour:
   mat: {fileID: 2100000, guid: fe233ef232aed2043999956a9d6e5c9b, type: 2}
   pos: {x: 0, y: 0}
   scale: 10
+  timespeed: 0.01
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
