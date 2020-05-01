@@ -13,23 +13,24 @@ public class Explorer : MonoBehaviour {
     private Vector2 smoothPos;
     private float smoothScale;
     private Vector2 firstTouch;
+    private float ZoomedBy;
 
     private void UpdateShaer()
     {
-        smoothPos = Vector2.Lerp(smoothPos, pos, .05f);
-        smoothScale = Mathf.Lerp(smoothScale, scale, .05f);
+        //smoothPos = Vector2.Lerp(smoothPos, pos, .09f);
+        //smoothScale = Mathf.Lerp(smoothScale, scale, .05f);
 
         float aspect = (float)Screen.width / (float)Screen.height; //These are integer so it should be casted to float otherwise, it will be truncated.
 
-        float scaleX = smoothScale;
-        float scaleY = smoothScale;
+        float scaleX = scale;
+        float scaleY = scale;
 
         if (aspect > 1f)
             scaleY /= aspect;
         else
             scaleX *= aspect;
 
-        mat.SetVector("_Area", new Vector4(smoothPos.x, smoothPos.y, scaleX, scaleY));
+        mat.SetVector("_Area", new Vector4(pos.x, pos.y, scaleX, scaleY));
     }
 
     private void HandleInputs()
@@ -82,7 +83,8 @@ public class Explorer : MonoBehaviour {
         }
         Shader.SetGlobalFloat("color_diff", diff);
         
-        if (Input.touchCount >= 1)
+        //Scroll
+        if (Input.touchCount == 1)
         {
             
             if (Input.GetTouch(0).phase == TouchPhase.Began)
@@ -93,11 +95,32 @@ public class Explorer : MonoBehaviour {
             if (Input.GetTouch(0).phase == TouchPhase.Moved)
             {
                 //Vector of movement from first touch to new touch position is calculated
-                Vector2 movement = new Vector2(10*(Input.GetTouch(0).position.x - firstTouch.x) / ((float)Screen.width), 6*(Input.GetTouch(0).position.y - firstTouch.y) / ((float)Screen.height));
+                Vector2 movement = new Vector2((Input.GetTouch(0).deltaPosition.x) / ((float)Screen.width), 
+                    (Input.GetTouch(0).deltaPosition.y) / ((float)Screen.height));
+                //print(Input.GetTouch(0).deltaPosition);
                 pos -= movement;
-                firstTouch = Input.GetTouch(0).position; //First touch is being updated (following) new touch position
-
+                print("Pos : " + pos + " movement : " + movement);
             }
+        }
+
+        //Pinch
+        if (Input.touchCount >= 2)
+        {
+            var pos1 = Input.GetTouch(0).position;
+            var pos2 = Input.GetTouch(1).position;
+            var pos1b = Input.GetTouch(0).position - Input.GetTouch(0).deltaPosition;
+            var pos2b = Input.GetTouch(1).position - Input.GetTouch(1).deltaPosition;
+
+            //Calculate Zoom
+            //var zoom;
+
+            float BeforeScale = Vector2.Distance(pos1b, pos2b) / 4;
+            float AfterScale = Vector2.Distance(pos1, pos2) / 4;
+            ZoomedBy = BeforeScale / AfterScale;
+            scale *= ZoomedBy;
+
+
+            //print("zoomed by : " + ZoomedBy + " Scale : " + scale);
         }
     }
 }
