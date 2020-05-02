@@ -52,7 +52,7 @@ Shader "Explorer/Mandelbrot"
             fixed4 frag (v2f i) : SV_Target
             {
 				//Fundamental Mendelbrot loop.
-				float2 c = float2(-0.7269f, 0.1889f);
+				float2 c = float2(-0.512511498387847167, 0.521295573094847167);
 				float2 z = _Area.xy + (i.uv - .5)*_Area.zw;
 				float iter;
 				float maxiter = 1000;

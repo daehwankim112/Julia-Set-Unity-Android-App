@@ -14,16 +14,18 @@ public class Explorer : MonoBehaviour {
     private float smoothScale;
     private Vector2 firstTouch;
     private float ZoomedBy;
+    private float scaleX, scaleY;
 
     private void UpdateShaer()
     {
+        //These are for smoothing user interactions. Put these back if fps is good.
         //smoothPos = Vector2.Lerp(smoothPos, pos, .09f);
         //smoothScale = Mathf.Lerp(smoothScale, scale, .05f);
 
         float aspect = (float)Screen.width / (float)Screen.height; //These are integer so it should be casted to float otherwise, it will be truncated.
 
-        float scaleX = scale;
-        float scaleY = scale;
+        scaleX = scale;
+        scaleY = scale;
 
         if (aspect > 1f)
             scaleY /= aspect;
@@ -33,6 +35,7 @@ public class Explorer : MonoBehaviour {
         mat.SetVector("_Area", new Vector4(pos.x, pos.y, scaleX, scaleY));
     }
 
+    /*
     private void HandleInputs()
     {
         if (Input.GetKey(KeyCode.KeypadPlus))
@@ -61,16 +64,7 @@ public class Explorer : MonoBehaviour {
             pos.y -= .01f * scale;
         }
     }
-
-    private Vector2 PositionDelta(Touch touch)
-    {
-        //not moved
-        //if (touch.phase != TouchPhase.Moved)
-            return Vector2.zero;
-
-        //Delta
-
-    }
+    */
 
     // The difference between update and fixed update is that the fixed update execute fixed amount of update per seconds
     //while normal update depends on how fast your computer is.
@@ -82,11 +76,10 @@ public class Explorer : MonoBehaviour {
             diff += timespeed;
         }
         Shader.SetGlobalFloat("color_diff", diff);
-        
+
         //Scroll
-        if (Input.touchCount == 1)
+        if (Input.touchCount >= 1)
         {
-            
             if (Input.GetTouch(0).phase == TouchPhase.Began)
             {
                 firstTouch = Input.GetTouch(0).position;
@@ -95,11 +88,10 @@ public class Explorer : MonoBehaviour {
             if (Input.GetTouch(0).phase == TouchPhase.Moved)
             {
                 //Vector of movement from first touch to new touch position is calculated
-                Vector2 movement = new Vector2((Input.GetTouch(0).deltaPosition.x) / ((float)Screen.width), 
-                    (Input.GetTouch(0).deltaPosition.y) / ((float)Screen.height));
-                //print(Input.GetTouch(0).deltaPosition);
+                Vector2 movement = new Vector2(scale * (Input.GetTouch(0).deltaPosition.x) / ((float)Screen.width) / 2, 
+                    scaleY * (Input.GetTouch(0).deltaPosition.y) / ((float)Screen.height) / 2);
+
                 pos -= movement;
-                print("Pos : " + pos + " movement : " + movement);
             }
         }
 
@@ -120,7 +112,6 @@ public class Explorer : MonoBehaviour {
             scale *= ZoomedBy;
 
 
-            //print("zoomed by : " + ZoomedBy + " Scale : " + scale);
         }
     }
 }
