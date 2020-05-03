@@ -10,6 +10,9 @@ Shader "Explorer/Mandelbrot"
 		_G("Green", range(0, 1)) = 0.5
 		_B("Blue", range(0, 1)) = 0.5
 		[Toggle] _TimePass("Time", Float) = 0
+		_C_real("Real", Float) = 0
+		_C_imaginary("Imaginary", Float) = 0
+		[Toggle] _Magic("Magic", Float) = 0
     }
     SubShader
     {
@@ -46,13 +49,20 @@ Shader "Explorer/Mandelbrot"
 
 			float4 _Area;
             sampler2D _MainTex;
-			float _R, _G, _B, _TimePass;
+			float _R, _G, _B, _TimePass, _C_real, _C_imaginary, _Magic;
 			uniform float color_diff = 0;
+			uniform float magic_diff = 0;
 
-            fixed4 frag (v2f i) : SV_Target
-            {
-				//Fundamental Mendelbrot loop.
-				float2 c = float2(-0.512511498387847167, 0.521295573094847167);
+			fixed4 frag(v2f i) : SV_Target
+			{
+				//Implementation of magic button that rotates c values by time
+				float2 c;
+				if (_Magic == 0)
+					c = float2(_C_real, _C_imaginary);
+				else
+					c = float2(0.7885 * sin(magic_diff), 0.7885 * cos(magic_diff));
+
+				//Fundamental Julia loop
 				float2 z = _Area.xy + (i.uv - .5)*_Area.zw;
 				float iter;
 				float maxiter = 1000;
@@ -74,6 +84,7 @@ Shader "Explorer/Mandelbrot"
 
 				iter -= fracIter;
 
+				//Implementation of rotation of color by time
                 float m = sqrt(iter/ maxiter);
 				col = (cos(float4(_R, _G, _B, 1)*m * 20 + color_diff)*0.5 + .5);
 

@@ -9,7 +9,8 @@ public class Explorer : MonoBehaviour {
     public float scale;
     public float timespeed = 0.001f;
 
-    private float diff = 0;
+    private float timeDiff = 0;
+    private float magicDiff = 0;
     private Vector2 smoothPos;
     private float smoothScale;
     private Vector2 firstTouch;
@@ -73,9 +74,14 @@ public class Explorer : MonoBehaviour {
         //HandleInputs();
         UpdateShaer();
         if ( mat.GetFloat("_TimePass") == 1 ) {
-            diff += timespeed;
+            timeDiff += timespeed;
         }
-        Shader.SetGlobalFloat("color_diff", diff);
+        Shader.SetGlobalFloat("color_diff", timeDiff);
+        if (mat.GetFloat("_Magic") == 1)
+        {
+            magicDiff += timespeed;
+        }
+        Shader.SetGlobalFloat("magic_diff", magicDiff);
 
         //Scroll
         if (Input.touchCount >= 1)
