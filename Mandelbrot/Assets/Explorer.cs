@@ -73,7 +73,6 @@ public class Explorer : MonoBehaviour {
             {
                 //Double tapped. Pause the game
                 PauseSetting.ChangeGameStatue(1);
-                print("Double Tapped!");
                 waitingForSecondTap = false;
                 TapCount = 0;
             }
