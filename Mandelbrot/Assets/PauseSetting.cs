@@ -6,7 +6,6 @@ public class PauseSetting : MonoBehaviour
 {
 
     public static bool GameIsPaused = false;
-    public static bool GameStatueChanger = false;
     public static float Order;
     public Material mat;
     public Canvas PausedCanvas;
@@ -17,7 +16,7 @@ public class PauseSetting : MonoBehaviour
     }
 
 
-    void Update()
+    void FixedUpdate()
     {
         if ( Order == 1 && ! GameIsPaused)
         {
@@ -25,25 +24,6 @@ public class PauseSetting : MonoBehaviour
             GameIsPaused = true;
         }
     }
-
-    /*
-    public void Resume()
-    {
-        if (GameIsPaused)
-        {
-            PausedCanvas.sortingOrder = sortorder;
-            GameIsPaused = false;
-        }
-    }
-
-    public void Pause()
-    {
-        if (!GameIsPaused && GameStatueChanger)
-        {
-            PausedCanvas.sortingOrder = sortorder;
-            GameIsPaused = true;
-        }
-    }*/
 
     public static void ChangeGameStatue( float order)
     {
@@ -57,16 +37,8 @@ public class PauseSetting : MonoBehaviour
         Order = -1;
         GameIsPaused = false;
     }
-    /*
-    public void Pause()
-    {
-        if (! GameIsPaused && GameStatueChanger)
-        {
-            PausedCanvas.sortingOrder = 1;
-            GameIsPaused = true;
-        }
-    }*/
 
+    //Sliders and toggles backends
     public void SetRed(float red)
     {
         mat.SetFloat("_R", red);

@@ -9,10 +9,10 @@ Shader "Explorer/Mandelbrot"
 		_R("Red", range(0,1)) = 0.5
 		_G("Green", range(0, 1)) = 0.5
 		_B("Blue", range(0, 1)) = 0.5
-		[Toggle] _TimePass("Time", Float) = 0
+		[Toggle] _TimePass("Time", Float) = 1
 		_C_real("Real", Float) = 0
 		_C_imaginary("Imaginary", Float) = 0
-		[Toggle] _Magic("Magic", Float) = 0
+		[Toggle] _Magic("Magic", Float) = 1
     }
     SubShader
     {
@@ -75,9 +75,11 @@ Shader "Explorer/Mandelbrot"
 					if (length(z) > r) break;
 				}
 
+				//The Z value didn't escape to infinite. Set it to black
 				if (iter == maxiter)
 					return 0;
 
+				//Smoothing color of each layers determined by number of iterations
 				float dist = length(z); //Distance from origin
 				float fracIter = (dist - r) / (r2 - r);
 				fracIter = log2( log(dist) / log(r) ); //double exponential interpolation

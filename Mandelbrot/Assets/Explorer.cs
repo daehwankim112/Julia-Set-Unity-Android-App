@@ -29,6 +29,7 @@ public class Explorer : MonoBehaviour {
         waitingForSecondTap = false;
     }
 
+    //Update location of centre and size of render
     private void UpdateShaer()
     {
         //These are for smoothing user interactions. Put these back if fps is good.
@@ -48,24 +49,21 @@ public class Explorer : MonoBehaviour {
         mat.SetVector("_Area", new Vector4(pos.x, pos.y, scaleX, scaleY));
     }
 
+    //Pause game if it is double tapped
     private void DoubleTap()
     {
-        //print(Time.time);
         if (Input.touchCount == 1)
         {
             Touch touch = Input.GetTouch(0);
-            //print(touch.phase);
 
             if (touch.phase == TouchPhase.Ended && Time.time > NewTimeUntilDoubleTap - MaxDubbleTapTime + 0.1f)
             {
                 TapCount += 1;
-                //print("TapCount added. TapCount: " + TapCount + " Time: " + Time.time);
                 if ( TapCount == 1 )
                     waitingForSecondTap = true;
                 else
                     waitingForSecondTap = false;
             }
-            //print("TapCount: " + TapCount + "waitingForSecondTap: " + waitingForSecondTap);
             if (TapCount == 1 && waitingForSecondTap)
             {
                 NewTimeUntilDoubleTap = Time.time + MaxDubbleTapTime;
@@ -74,23 +72,16 @@ public class Explorer : MonoBehaviour {
             else if (TapCount == 2 && Time.time <= NewTimeUntilDoubleTap)
             {
                 //Double tapped. Pause the game
-                /*
-                PauseSetting.GameIsPaused = true;
-                PauseSetting.GameStatueChanger = true;*/
                 PauseSetting.ChangeGameStatue(1);
                 print("Double Tapped!");
-                    
-
                 waitingForSecondTap = false;
                 TapCount = 0;
             }
-            //print("NewTimeUntilDoubleTap: " + NewTimeUntilDoubleTap + " Time: " + Time.time);
         }
         if (Time.time > NewTimeUntilDoubleTap && TapCount > 0)
         {
             TapCount = 0;
             waitingForSecondTap = false;
-            //print("Timeout! Time: " + Time.time + "NewTime: " + NewTimeUntilDoubleTap);
         }
     }
 
@@ -108,6 +99,7 @@ public class Explorer : MonoBehaviour {
             DoubleTap();
         }
         
+        //Make time pass or changes color by toggle button
         if ( mat.GetFloat("_TimePass") == 1 ) {
             timeDiff += timespeed;
         }
