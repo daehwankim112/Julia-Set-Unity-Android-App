@@ -65,7 +65,7 @@ Shader "Explorer/Mandelbrot"
 				//Fundamental Julia loop
 				float2 z = _Area.xy + (i.uv - .5)*_Area.zw;
 				float iter;
-				float maxiter = 1000;
+				float maxiter = 200;
 				float r = 20;
 				float r2 = r * r;
 				float4 col;

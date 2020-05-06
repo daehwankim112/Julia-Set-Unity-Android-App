@@ -21,12 +21,14 @@ public class Explorer : MonoBehaviour {
     private float MaxDubbleTapTime;
     private float NewTimeUntilDoubleTap;
     private bool waitingForSecondTap;
+    private bool buffer;
 
     void Start()
     {
         TapCount = 0;
         MaxDubbleTapTime = 0.7f;
         waitingForSecondTap = false;
+        scale = 5;
     }
 
     //Update location of centre and size of render
@@ -105,7 +107,15 @@ public class Explorer : MonoBehaviour {
         Shader.SetGlobalFloat("color_diff", timeDiff);
         if (mat.GetFloat("_Magic") == 1)
         {
-            magicDiff += timespeed;
+            if (buffer)
+            {
+                magicDiff += timespeed;
+                buffer = false;
+            }
+            else
+            {
+                buffer = true;
+            }
         }
         Shader.SetGlobalFloat("magic_diff", magicDiff);
 
@@ -124,23 +134,6 @@ public class Explorer : MonoBehaviour {
                     scaleY * (Input.GetTouch(0).deltaPosition.y) / ((float)Screen.height) / 2);
 
                 pos -= movement;
-            }
-
-            //Pinch
-            if (Input.touchCount >= 2)
-            {
-                var pos1 = Input.GetTouch(0).position;
-                var pos2 = Input.GetTouch(1).position;
-                var pos1b = Input.GetTouch(0).position - Input.GetTouch(0).deltaPosition;
-                var pos2b = Input.GetTouch(1).position - Input.GetTouch(1).deltaPosition;
-
-                //Calculate Zoom
-                //var zoom;
-
-                float BeforeScale = Vector2.Distance(pos1b, pos2b) / 4;
-                float AfterScale = Vector2.Distance(pos1, pos2) / 4;
-                ZoomedBy = BeforeScale / AfterScale;
-                scale *= ZoomedBy;
             }
         }
     }
