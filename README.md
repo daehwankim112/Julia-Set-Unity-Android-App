@@ -1,4 +1,4 @@
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/9PoNSOJ1OT4/0.jpg)](https://www.youtube.com/watch?v=9PoNSOJ1OT4)
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/9PoNSOJ1OT4/0.jpg)](https://www.youtube.com/watch?v=9PoNSOJ1OT4) </br >
 _Click the image to play video on Youtube_
 
 # Julia Set
