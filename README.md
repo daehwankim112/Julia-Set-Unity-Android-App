@@ -14,13 +14,16 @@ It has following features:
 ## Supporting Platform
 Android
 
-## Link to Playstore:
+## Download (Link to Playstore)
 https://play.google.com/store/apps/details?id=com.DaehwanKim.JuliaSet
 
-## Link to Trello:
+## Link to Trello
 https://trello.com/b/PL636pg2/mandelbrot
 
-## Contact:
+## Dev log
+https://daehwankim112.github.io/posts/julia-set-android-app/
+
+## Contact
 juliasetapp@gmail.com </br >
 kdw8731@gmail.com </br >
 https://daehwankim112.github.io/
