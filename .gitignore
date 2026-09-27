@@ -1,43 +1,44 @@
 ###
 # Unity folders and files
 ###
-[Aa]ssets/AssetStoreTools*
-[Bb]uild/
-[Ll]ibrary/
-[Ll]ocal[Cc]ache/
-[Oo]bj/
-[Tt]emp/
-[Uu]nityGenerated/
+Mandelbrot/[Aa]ssets/AssetStoreTools*
+Mandelbrot/[Bb]uild/
+Mandelbrot/[Ll]ibrary/
+Mandelbrot/[Ll]ocal[Cc]ache/
+Mandelbrot/[Oo]bj/
+Mandelbrot/[Tt]emp/
+Mandelbrot/[Uu]nityGenerated/
 # file on crash reports
-sysinfo.txt
+Mandelbrot/sysinfo.txt
 # Unity3D generated meta files
-*.pidb.meta
+Mandelbrot/*.pidb.meta
 
 ###
 # VS/MD solution and project files
 ###
-[Ee]xportedObj/
-*.booproj
-*.csproj
-*.sln
-*.suo
-*.svd
-*.unityproj
-*.user
-*.userprefs
-*.pidb
-.DS_Store
+Mandelbrot/[Ee]xportedObj/
+Mandelbrot/*.booproj
+Mandelbrot/*.csproj
+Mandelbrot/*.sln
+Mandelbrot/*.suo
+Mandelbrot/*.svd
+Mandelbrot/*.unityproj
+Mandelbrot/*.user
+Mandelbrot/*.userprefs
+Mandelbrot/*.pidb
+Mandelbrot/.DS_Store
 
 ###
 # OS generated
 ###
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-Icon?
-ehthumbs.db
-Thumbs.db
+Mandelbrot/.DS_Store
+Mandelbrot/.DS_Store?
+Mandelbrot/._*
+Mandelbrot/.Spotlight-V100
+Mandelbrot/.Trashes
+Mandelbrot/Icon?
+Mandelbrot/ehthumbs.db
+Mandelbrot/Thumbs.db
 
-[Bb]uilds/
+Mandelbrot/[Bb]uilds/
+Mandelbrot/Logs/*
